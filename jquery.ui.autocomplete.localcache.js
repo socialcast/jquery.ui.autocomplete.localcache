@@ -60,13 +60,9 @@
         //move options to top level object to fix scoping
         this.remoteSource = this.options.remoteSource;
         this.cache = this.options.cache;
-        this.requestIndex = 0;
 
         var self = this;
-        this.element.on('autocompletesearch', function() {
-          self.abort();
-        });
-        this.element.on('autocompleteclose', function() {
+        this.element.on('autocompletesearch autocompleteclose', function() {
           self.abort();
         });
 
@@ -75,6 +71,7 @@
         origInitSource.call(this);
       }
     },
+    requestIndex: 0,
     currentXhr: null,
     // abort current xhr
     abort: function() {
