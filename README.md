@@ -28,10 +28,10 @@ $('input').autocomplete({
 
 ## Contributing
 
-See CONTRIBUTING.md for instructions
-See CONTRIBUTORS.txt for list of project contributors
+See [CONTRIBUTING.md] for instructions
+See [CONTRIBUTORS.txt] for list of project contributors
 
 ## Copyright
 
 Copyright (c) 2012 VMware, Inc. All Rights Reserved.
-See LICENSE.txt for further details.
+See [LICENSE.txt] for further details.
