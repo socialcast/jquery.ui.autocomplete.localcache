@@ -26,24 +26,18 @@
  * serve autocomplete results from local + remote cache.
  *
  * options:
- *  remoteDelay - delay in millis before firing remote request (default=200)
- *  remoteSource - function to create xhr to perform ajax request
+ *  remoteDelay - number of milliseconds delay before firing remote request (default=200)
+ *  remoteSource - function responsible for creating xhr to perform ajax request
  *
- * usage:
+ * example usage:
  *  var cache = [];
  *  $('input').autocomplete({
  *    cache: cache,
- *    remoteDelay: 200,
  *    remoteSource: function(request, response) {
- *      return $.ajax({
- *        url: '/path/to/search',
- *        data: {q: request.term},
- *        success: function(data) {
- *          response(data.entries);
- *        }
+ *      return $.getJSON('/path/to/search', function(data) {
+ *        response(data.entries);
  *      });
  *    }
- *   },
  *  });
  */
 (function($) {

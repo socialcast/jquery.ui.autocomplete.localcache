@@ -26,6 +26,11 @@ $('input').autocomplete({
 * Include JS Dependencies and Project Script in your page
 * Initialize Component
 
+## Options
+
+* remoteDelay - number of milliseconds to wait between local search and
+  firing remote ajax call (default = 200)
+
 ## Contributing
 
 * [Contribution guidelines](CONTRIBUTING.md)
