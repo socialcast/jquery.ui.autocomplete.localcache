@@ -1,7 +1,17 @@
 # jquery.ui.autocomplete.localcache
 
-Extend the jQuery UI Autocomplete plugin to support Local + Remote AJAX
-searches.
+jQuery UI Autocomplete Extension to support local + remote results via
+AJAX
+
+Why choose between a static list of local results for autocomplete and
+waiting for AJAX responses to load information?  This extension provides
+the best of both worlds by searching a local cache of results
+immediately while additional results are loaded from the server in the
+background.
+
+[Demo](http://todo)
+
+[Core jQuery UI Autocomplete Documentation](http://jqueryui.com/demos/autocomplete/)
 
 ## Usage
 
@@ -18,17 +28,19 @@ $('input').autocomplete({
 
 ## Features
 
-* Search local cache immediately while additional results are loaded
-  from the server
+* Local cache of results is updated after each AJAX response to increase
+  speed of future searches.
 
 ## Installation
 
-* Include JS Dependencies and Project Script in your page
-* Initialize Component
+* Ensure all JS dependencies are included in your page
+* Include `jquery.ui.autocomplete.localcache.js` script
+* Initialize the jQuery UI autocomplete component with localcache
+  configuration.
 
-## Options
+## Configuration
 
-* remoteDelay - number of milliseconds to wait between local search and
+* `remoteDelay` - number of milliseconds to wait between local search and
   firing remote ajax call (default = 200)
 
 ## Contributing
