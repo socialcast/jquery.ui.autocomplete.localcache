@@ -50,10 +50,10 @@ $('input').autocomplete({
 
 ## Contributing
 
-* [Contribution guidelines](CONTRIBUTING.md)
-* [List of project contributors](CONTRIBUTORS.txt)
+* [Contribution guidelines](https://github.com/socialcast/jquery.ui.autocomplete.localcache/CONTRIBUTING.md)
+* [List of project contributors](https://github.com/socialcast/jquery.ui.autocomplete.localcache/CONTRIBUTORS.txt)
 
 ## Copyright
 
 Copyright (c) 2012 VMware, Inc. All Rights Reserved.
-See [Project license](LICENSE.txt) for additional details.
+See [Project license](https://github.com/socialcast/jquery.ui.autocomplete.localcache/LICENSE.txt) for additional details.
