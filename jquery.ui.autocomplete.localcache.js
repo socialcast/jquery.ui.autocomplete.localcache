@@ -65,7 +65,7 @@
         origInitSource.call(this);
       }
     },
-    requestIndex: 0,
+    requestedTerm: null,
     currentXhr: null,
     // abort current xhr
     abort: function() {
@@ -76,14 +76,16 @@
     },
     /**
      * allow for appending new results to existing autocomplete results
+     * @param results [Array] list of results for the requested term.  new entries will automatically be added to the cache
      */
-    amendResponse: function(results, requestIndex) {
+    amendResponse: function(results) {
       var self = this;
       var newEntries = _.reject(results, function(entry) {
         return _.detect(self.cache, function(e) { return e.value === entry.value; });
       });
       this.cache = this.cache.concat(newEntries);
-      if (requestIndex && requestIndex !== this.requestIndex) {
+      if (this.requestedTerm && this.requestedTerm !== this.element.val()) {
+        // input value has changed since the search was performed
         return;
       }
 
@@ -105,7 +107,7 @@
       this.cache.remove(element);
     },
     /**
-     * show results from local cache immediately and fire off ajax request to load more results
+     * show results from local cache immediately and prepare to fire off ajax request to load more results
      */
     localAndRemoteResponse: function(request, response) {
       if (this.remoteSourceDelay) {
@@ -124,11 +126,11 @@
           return;
         }
 
-        var uniqueRequestId = ++self.requestIndex;
+        self.requestedTerm = self.element.val();
         self.element.addClass('ui-autocomplete-loading');
         self.currentXhr = self.remoteSource(request, function() { self.amendResponse.apply(self, arguments); });
         self.currentXhr.fail(function() {
-          self.amendResponse([], uniqueRequestId);
+          self.amendResponse([]);
         });
         self.currentXhr.complete(function() {
           self.pending = 0;
