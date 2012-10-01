@@ -89,7 +89,6 @@
         return;
       }
 
-      this.element.removeClass('ui-autocomplete-loading');
       if (this.menu.element.is(':visible')) {
         // amend new entries to existing menu
         this._renderMenu(this.menu.element, newEntries);
