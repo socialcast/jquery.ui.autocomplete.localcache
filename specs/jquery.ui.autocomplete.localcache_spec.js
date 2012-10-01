@@ -108,15 +108,27 @@ describe('jquery.ui.autocomplete.localcache', function() {
 
   describe('autocompletesearch event', function() {
     beforeEach(function() {
+      stub(autocomplete, 'abort');
       autocomplete._trigger('search');
     });
-    it('calls #abort');
+    afterEach(function() {
+      autocomplete.abort.restore();
+    });
+    it('calls #abort', function() {
+      expect(autocomplete.abort.called).toBe(true);
+    });
   });
   describe('autocompleteclose event', function() {
     beforeEach(function() {
+      stub(autocomplete, 'abort');
       autocomplete._trigger('close');
     });
-    it('calls #abort');
+    afterEach(function() {
+      autocomplete.abort.restore();
+    });
+    it('calls #abort', function() {
+      expect(autocomplete.abort.called).toBe(true);
+    });
   });
 
   describe('#abort', function() {
