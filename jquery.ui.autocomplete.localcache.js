@@ -132,9 +132,6 @@
         self.requestedTerm = self.element.val();
         self.element.addClass('ui-autocomplete-loading');
         self.currentXhr = self.remoteSource(request, function() { self.amendResponse.apply(self, arguments); });
-        self.currentXhr.fail(function() {
-          self.amendResponse([]);
-        });
         self.currentXhr.always(function() {
           self.pending = 0;
           self.element.removeClass('ui-autocomplete-loading');
