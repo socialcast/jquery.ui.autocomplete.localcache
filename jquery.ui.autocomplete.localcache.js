@@ -117,8 +117,6 @@
      * show results from local cache immediately and prepare to fire off ajax request to load more results
      */
     localAndRemoteSource: function(request, response) {
-      this.pending = 1;
-
       var localResults = this.options.filter.call(this, this.cache, request.term);
       response(localResults);
 
@@ -130,11 +128,14 @@
         }
 
         self.requestedTerm = self.element.val();
+        self.pending++;
         self.element.addClass('ui-autocomplete-loading');
         self.currentXhr = self.remoteSource(request, function() { self.amendResponse.apply(self, arguments); });
         self.currentXhr.always(function() {
-          self.pending = 0;
-          self.element.removeClass('ui-autocomplete-loading');
+          self.pending--;
+          if (!self.pending) {
+            self.element.removeClass('ui-autocomplete-loading');
+          }
         });
       }, this.options.remoteDelay);
     }
