@@ -75,7 +75,9 @@
       }
     },
     /**
-     * allow for appending new results to existing autocomplete results
+     * append new results to existing autocomplete or show the autocomplete for the first time
+     * adds new results to the cache
+     * prevents display of results if input value has changed since the search was performed
      * @param results [Array] list of results for the requested term.  new entries will automatically be added to the cache
      */
     amendResponse: function(results) {
