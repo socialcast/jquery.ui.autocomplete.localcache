@@ -91,13 +91,13 @@
 
       this.element.removeClass('ui-autocomplete-loading');
       if (this.menu.element.is(':visible')) {
-        _.each(newEntries, function(item) {
-          self._renderItem(self.menu.element, item);
-        });
+        // amend new entries to existing menu
+        this._renderMenu(this.menu.element, newEntries);
         this.menu.refresh();
         this._resizeMenu();
       } else {
-        this.__response.apply( this, [newEntries] );
+        // show menu for the first time
+        this.__response.apply(this, [newEntries]);
       }
     },
     /**
@@ -132,7 +132,7 @@
         self.currentXhr.fail(function() {
           self.amendResponse([]);
         });
-        self.currentXhr.complete(function() {
+        self.currentXhr.always(function() {
           self.pending = 0;
           self.element.removeClass('ui-autocomplete-loading');
         });

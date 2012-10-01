@@ -16,8 +16,13 @@ background.
 ## Usage
 
 ```javascript
+// initial local cache of results
+var cache = [
+  {label: "Java", value: 'java'},
+  {label: "Ruby", value: 'ruby'}
+];
 $('input').autocomplete({
-  cache: [],
+  cache: cache,
   remoteSource: function(request, response) {
     return $.getJSON('/some/search/endpoint', function(data) {
       response(data);
@@ -34,7 +39,7 @@ $('input').autocomplete({
 ## Installation
 
 * Ensure all JS dependencies are included in your page
-* Include `jquery.ui.autocomplete.localcache.js` script
+* Include [jquery.ui.autocomplete.localcache.js](https://github.com/socialcast/jquery.ui.autocomplete.localcache/raw/master/jquery.ui.autocomplete.localcache.js) script
 * Initialize the jQuery UI autocomplete component with localcache
   configuration.
 
