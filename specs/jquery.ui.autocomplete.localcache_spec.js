@@ -1,5 +1,15 @@
 describe('jquery.ui.autocomplete.localcache', function() {
-
+  var $input = null;
+  var autocomplete = null;
+  beforeEach(function() {
+    $input = $('#autocomplete_input').autocomplete({
+      cache: [],
+      remoteSource: function() {
+        console.log('here');
+      }
+    });
+    autocomplete = $input.data('autocomplete');
+  });
   describe('#amendResponse', function() {
     describe('when the autocomplete menu is visible', function() {
       it('adds new elements to the existing menu', function() {
@@ -24,9 +34,15 @@ describe('jquery.ui.autocomplete.localcache', function() {
   });
 
   describe('autocompletesearch event', function() {
+    beforeEach(function() {
+      autocomplete._trigger('search');
+    });
     it('calls #abort');
   });
   describe('autocompleteclose event', function() {
+    beforeEach(function() {
+      autocomplete._trigger('close');
+    });
     it('calls #abort');
   });
 
@@ -34,6 +50,9 @@ describe('jquery.ui.autocomplete.localcache', function() {
     describe('when currentXhr exists', function() {
       it('calls currentXhr.abort');
       it('sets currentXhr to null');
+    });
+    describe('when remoteSourceDelay exists', function() {
+      it('clears the remoteSourceDelay timeout');
     });
   });
 

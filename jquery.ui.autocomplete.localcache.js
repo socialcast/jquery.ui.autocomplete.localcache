@@ -69,10 +69,11 @@
         origInitSource.call(this);
       }
     },
-    // abort current xhr and cancel pending remoteSource
+    // abort current xhr and cancel pending remoteSource call
     abort: function() {
       if (this.remoteSourceDelay) {
         clearTimeout(this.remoteSourceDelay);
+        this.remoteSourceDelay = null;
       }
 
       if (this.currentXhr) {
