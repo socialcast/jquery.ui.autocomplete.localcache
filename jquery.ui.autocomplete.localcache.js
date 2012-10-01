@@ -41,6 +41,7 @@
  *  });
  */
 (function($) {
+  'use strict';
   var proto = $.ui.autocomplete.prototype;
   var origInitSource = proto._initSource;
 
