@@ -19,4 +19,32 @@ describe('jquery.ui.autocomplete.localcache', function() {
       it('adds the new results to the local cache');
     });
   });
+
+  describe('autocompletesearch event', function() {
+    it('calls #abort');
+  });
+  describe('autocompleteclose event', function() {
+    it('calls #abort');
+  });
+
+  describe('#abort', function() {
+    describe('when currentXhr exists', function() {
+      it('calls currentXhr.abort');
+      it('sets currentXhr to null');
+    });
+  });
+
+  describe('#localAndRemoteSource', function() {
+    describe('when options.remoteDelay has passed', function() {
+      it('adds ui-autocomplete-loading class');
+      it('fires xhr request');
+    });
+    describe('when search event is cancelled', function() {
+      it('does not fire xhr request');
+    });
+    describe('when xhr completes', function() {
+      it('sets pending = 0');
+      it('removes ui-autocomplete-loading class');
+    });
+  });
 });
