@@ -9,7 +9,7 @@ the best of both worlds by searching a local cache of results
 immediately while additional results are loaded from the server in the
 background.
 
-[Demo](http://todo)
+[Demo](http://jsfiddle.net/GZpf6/8/)
 
 [Core jQuery UI Autocomplete Documentation](http://jqueryui.com/demos/autocomplete/)
 
