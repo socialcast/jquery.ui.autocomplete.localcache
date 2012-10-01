@@ -69,8 +69,12 @@
         origInitSource.call(this);
       }
     },
-    // abort current xhr
+    // abort current xhr and cancel pending remoteSource
     abort: function() {
+      if (this.remoteSourceDelay) {
+        clearTimeout(this.remoteSourceDelay);
+      }
+
       if (this.currentXhr) {
         this.currentXhr.abort();
         this.currentXhr = null;
@@ -113,10 +117,6 @@
      * show results from local cache immediately and prepare to fire off ajax request to load more results
      */
     localAndRemoteSource: function(request, response) {
-      if (this.remoteSourceDelay) {
-        clearTimeout(this.remoteSourceDelay);
-      }
-
       this.pending = 1;
 
       var localResults = this.options.filter.call(this, this.cache, request.term);
