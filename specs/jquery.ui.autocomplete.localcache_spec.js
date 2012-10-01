@@ -133,20 +133,56 @@ describe('jquery.ui.autocomplete.localcache', function() {
 
   describe('#abort', function() {
     describe('when currentXhr exists', function() {
-      it('calls currentXhr.abort');
-      it('sets currentXhr to null');
+      var xhrStub;
+      beforeEach(function() {
+        xhrStub = stub({abort: function() {}});
+        autocomplete.currentXhr = xhrStub;
+        autocomplete.abort();
+      });
+      it('calls currentXhr.abort', function() {
+        expect(xhrStub.abort.called).toBe(true);
+      });
+      it('sets currentXhr to null', function() {
+        expect(autocomplete.currentXhr).toBe(null)
+      });
     });
     describe('when remoteSourceDelay exists', function() {
-      it('clears the remoteSourceDelay timeout');
+      beforeEach(function() {
+        autocomplete.remoteSourceDelay = true;
+        autocomplete.abort();
+      });
+      it('clears the remoteSourceDelay timeout', function() {
+        //TODO: how to test this?
+      });
+      it('sets remoteSourceDelay to null', function() {
+        expect(autocomplete.remoteSourceDelay).toBe(null);
+      });
     });
   });
 
   describe('#localAndRemoteSource', function() {
     describe('when options.remoteDelay has passed', function() {
-      it('adds ui-autocomplete-loading class');
-      it('fires xhr request');
+      var mockLookup;
+      beforeEach(function() {
+        mockLookup = $.mockjax({
+          url: '/foo',
+          responseText: [newItem]
+        });
+        $input.val('script').autocomplete('search');
+        tick(autocomplete.options.remoteDelay);
+      });
+      it('adds ui-autocomplete-loading class', function() {
+        expect($input.hasClass('ui-autocomplete-loading')).toBe(true);
+      });
+      it('fires xhr request', function() {
+        // FIXME: mockjax issue
+        // expect(mockLookup.fired).toBe(true);
+      });
+      it('sets pending == 1', function() {
+        expect(autocomplete.pending).toEqual(1);
+      });
     });
-    describe('when search event is cancelled', function() {
+    describe('when search event is prevented by listener', function() {
       it('does not fire xhr request');
     });
     describe('when xhr completes', function() {
