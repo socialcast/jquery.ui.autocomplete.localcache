@@ -98,7 +98,7 @@
         return;
       }
 
-      if (this.menu.element.is(':visible')) {
+      if (this.menu.active) {
         // amend new entries to existing menu
         this._renderMenu(this.menu.element, newEntries);
         this.menu.refresh();

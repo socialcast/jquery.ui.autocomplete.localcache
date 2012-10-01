@@ -2,22 +2,35 @@ describe('jquery.ui.autocomplete.localcache', function() {
   var $input = null;
   var autocomplete = null;
   beforeEach(function() {
+    var localCache = [
+      {label: 'Ruby', value: 'ruby'},
+      {label: 'Java', value: 'java'}
+    ];
     $input = $('#autocomplete_input').autocomplete({
-      cache: [],
-      remoteSource: function() {
-        console.log('here');
+      cache: localCache,
+      remoteSource: function(request, response) {
+        return $.getJSON('/foo', function() {
+          response([
+            {label: 'Javascript', value: 'javascript'}
+          ]);
+        });
       }
     });
     autocomplete = $input.data('autocomplete');
   });
   describe('#amendResponse', function() {
-    describe('when the autocomplete menu is visible', function() {
-      it('adds new elements to the existing menu', function() {
-        // expect(true).toEqual(true);
+    describe('when the autocomplete menu is active', function() {
+      beforeEach(function() {
+        $input.autocomplete('search', 'java');
       });
-      it('adds the new results to the local cache');
+      it('adds new elements to the existing menu', function() {
+        expect(autocomplete.menu.element.find('li').length).toEqual(2);
+      });
+      it('adds the new results to the local cache', function() {
+        expect(autocomplete.cache.length).toEqual(2)
+      });
     });
-    describe('when the autocomplete menu is not visible', function() {
+    describe('when the autocomplete menu is not active', function() {
       it('adds creates and shows the menu');
       it('adds the new results to the local cache');
     });
