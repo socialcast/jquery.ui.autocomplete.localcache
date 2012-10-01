@@ -50,6 +50,9 @@
   proto.options.filter = $.ui.autocomplete.filter;
 
   $.extend(proto, {
+    requestedTerm: null,
+    currentXhr: null,
+    remoteSourceDelay: null,
     _initSource: function() {
       if (this.options.cache) {
         //move options to top level object to fix scoping
@@ -61,13 +64,11 @@
           self.abort();
         });
 
-        this.source = this.localAndRemoteResponse;
+        this.source = this.localAndRemoteSource;
       } else {
         origInitSource.call(this);
       }
     },
-    requestedTerm: null,
-    currentXhr: null,
     // abort current xhr
     abort: function() {
       if (this.currentXhr) {
@@ -111,7 +112,7 @@
     /**
      * show results from local cache immediately and prepare to fire off ajax request to load more results
      */
-    localAndRemoteResponse: function(request, response) {
+    localAndRemoteSource: function(request, response) {
       if (this.remoteSourceDelay) {
         clearTimeout(this.remoteSourceDelay);
       }
