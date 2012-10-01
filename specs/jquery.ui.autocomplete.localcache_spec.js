@@ -18,6 +18,9 @@ describe('jquery.ui.autocomplete.localcache', function() {
       it('does not show the autocomplete results');
       it('adds the new results to the local cache');
     });
+    describe('when response is an array of strings', function() {
+      it('normalizes array to expected hash (label, value) structure');
+    });
   });
 
   describe('autocompletesearch event', function() {
