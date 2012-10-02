@@ -45,6 +45,14 @@ $('input').autocomplete({
 
 ## Configuration
 
+Required and optional configuration for the local cache plugin.
+
+* `cache` - an array of objects to initialize the local autocomplete
+  cache.  The data format for cached entries *must* contain a `label`
+  and `value` property per the jQuery UI Autocomplete API.  An empty array is also acceptable.
+* `remoteSource` - a function that creates a jqXhr to lookup additional
+  suggestions.  The function takes two parameters: `request` and
+  `response` mirroring the default jQuery UI Autocomplete `source` option ([see docs](http://jqueryui.com/demos/autocomplete/#option-source)).
 * `remoteDelay` - number of milliseconds to wait between local search and
   firing remote ajax call (default = 200)
 
