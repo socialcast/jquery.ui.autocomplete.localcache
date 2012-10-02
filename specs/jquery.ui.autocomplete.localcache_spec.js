@@ -166,7 +166,7 @@ describe('jquery.ui.autocomplete.localcache', function() {
       beforeEach(function() {
         mockLookup = $.mockjax({
           url: '/foo',
-          responseText: [newItem]
+          responseText: []
         });
         $input.val('script').autocomplete('search');
         tick(autocomplete.options.remoteDelay);
@@ -183,11 +183,29 @@ describe('jquery.ui.autocomplete.localcache', function() {
       });
     });
     describe('when search event is prevented by listener', function() {
-      it('does not fire xhr request');
+      beforeEach(function() {
+        $input.bind('autocompletesearch', false);
+      });
+      it('does not fire xhr request', function() {
+        //TODO: how to test this?
+      });
     });
     describe('when xhr completes', function() {
-      it('sets pending = 0');
-      it('removes ui-autocomplete-loading class');
+      beforeEach(function() {
+        $.mockjax({
+          url: '/foo',
+          responseText: []
+        });
+        $input.val('script').autocomplete('search');
+        tick(autocomplete.options.remoteDelay);
+        mockjaxTick();
+      });
+      it('sets pending = 0', function() {
+        expect(autocomplete.pending).toEqual(0)
+      });
+      it('removes ui-autocomplete-loading class', function() {
+        expect(autocomplete.element.hasClass('ui-autocomplete-loading')).toBe(false)
+      });
     });
   });
 });
