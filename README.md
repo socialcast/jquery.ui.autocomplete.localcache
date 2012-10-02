@@ -17,12 +17,12 @@ background.
 
 ```javascript
 // initial local cache of results
-var cache = [
+var localCache = [
   {label: "Java", value: 'java'},
   {label: "Ruby", value: 'ruby'}
 ];
 $('input').autocomplete({
-  cache: cache,
+  cache: localCache,
   remoteSource: function(request, response) {
     return $.getJSON('/some/search/endpoint', function(data) {
       response(data);
