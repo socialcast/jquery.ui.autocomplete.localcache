@@ -33,7 +33,11 @@ $('input').autocomplete({
 
 ## Features
 
-* Local cache of results is updated after each AJAX response to increase
+* Searches local cache of entries before waiting for AJAX
+  request/response.
+* When AJAX response returns, new results are appended to the existing
+  suggestions.
+* Results from each AJAX response are stored in the local cache to increase
   speed of future searches.
 
 ## Installation
