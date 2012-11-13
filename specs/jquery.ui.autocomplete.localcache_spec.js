@@ -20,11 +20,15 @@ describe('jquery.ui.autocomplete.localcache', function() {
   });
 
   describe('#amendResponse', function() {
-    describe('when the autocomplete menu is active', function() {
+    describe('when the autocomplete menu is visible with items', function() {
+      var responseContent;
       beforeEach(function() {
         $.mockjax({
           url: '/foo',
           responseText: [newItem]
+        });
+        $input.on('autocompleteresponse', function(e, data) {
+          responseContent = data.content;
         });
         $input.val('java').autocomplete('search');
         tick(autocomplete.options.remoteDelay);
@@ -36,8 +40,29 @@ describe('jquery.ui.autocomplete.localcache', function() {
       it('adds the new results to the local cache', function() {
         expect(newItem).toBeCachedIn(autocomplete);
       });
+      it('fires the response event with the new content', function() {
+        expect(responseContent).toEqual([newItem]);
+      });
     });
-    describe('when the autocomplete menu is not active', function() {
+    describe('when the autocomplete menu is visible without any items', function() {
+      beforeEach(function() {
+        $.mockjax({
+          url: '/foo',
+          responseText: [newItem]
+        });
+        autocomplete.menu.element.show();
+        stub(autocomplete, '__response');
+        stub(autocomplete, '_renderMenu');
+        $input.val('script').autocomplete('search');
+        tick(autocomplete.options.remoteDelay);
+        mockjaxTick();
+      });
+      it('re-opens the menu rather than amending the results', function() {
+        expect(autocomplete.__response.called).toBe(true);
+        expect(autocomplete._renderMenu.called).toBe(false);
+      });
+    });
+    describe('when the autocomplete menu is not visible', function() {
       beforeEach(function() {
         $.mockjax({
           url: '/foo',
@@ -118,6 +143,7 @@ describe('jquery.ui.autocomplete.localcache', function() {
       expect(autocomplete.abort.called).toBe(true);
     });
   });
+
   describe('autocompleteclose event', function() {
     beforeEach(function() {
       stub(autocomplete, 'abort');
@@ -206,6 +232,18 @@ describe('jquery.ui.autocomplete.localcache', function() {
       it('removes ui-autocomplete-loading class', function() {
         expect(autocomplete.element.hasClass('ui-autocomplete-loading')).toBe(false)
       });
+    });
+  });
+
+  describe('#removeFromCache', function() {
+    var remainingItems;
+    beforeEach(function() {
+      var itemToRemove = autocomplete.cache[1];
+      remainingItems = _.without(autocomplete.cache, itemToRemove);
+      autocomplete.removeFromCache(itemToRemove);
+    });
+    it('removes the item from the cache', function() {
+      expect(autocomplete.cache).toEqual(remainingItems);
     });
   });
 });
