@@ -234,4 +234,16 @@ describe('jquery.ui.autocomplete.localcache', function() {
       });
     });
   });
+
+  describe('#removeFromCache', function() {
+    var remainingItems;
+    beforeEach(function() {
+      var itemToRemove = autocomplete.cache[1];
+      remainingItems = _.without(autocomplete.cache, itemToRemove);
+      autocomplete.removeFromCache(itemToRemove);
+    });
+    it('removes the item from the cache', function() {
+      expect(autocomplete.cache).toEqual(remainingItems);
+    });
+  });
 });

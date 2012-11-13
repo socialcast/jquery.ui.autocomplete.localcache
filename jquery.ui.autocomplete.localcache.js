@@ -110,7 +110,7 @@
      * remove an element from the cache
      */
     removeFromCache: function(element) {
-      this.cache.remove(element);
+      this.cache.splice(_.indexOf(this.cache, element), 1);
     },
     /**
      * show results from local cache immediately and prepare to fire off ajax request to load more results
