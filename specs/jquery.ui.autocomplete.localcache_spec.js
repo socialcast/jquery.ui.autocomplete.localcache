@@ -20,7 +20,7 @@ describe('jquery.ui.autocomplete.localcache', function() {
   });
 
   describe('#amendResponse', function() {
-    describe('when the autocomplete menu is active', function() {
+    describe('when the autocomplete menu is visible with items', function() {
       beforeEach(function() {
         $.mockjax({
           url: '/foo',
@@ -37,7 +37,25 @@ describe('jquery.ui.autocomplete.localcache', function() {
         expect(newItem).toBeCachedIn(autocomplete);
       });
     });
-    describe('when the autocomplete menu is not active', function() {
+    describe('when the autocomplete menu is visible without any items', function() {
+      beforeEach(function() {
+        $.mockjax({
+          url: '/foo',
+          responseText: [newItem]
+        });
+        autocomplete.menu.element.show();
+        stub(autocomplete, '__response');
+        stub(autocomplete, '_renderMenu');
+        $input.val('script').autocomplete('search');
+        tick(autocomplete.options.remoteDelay);
+        mockjaxTick();
+      });
+      it('re-opens the menu rather than amending the results', function() {
+        expect(autocomplete.__response.called).toBe(true);
+        expect(autocomplete._renderMenu.called).toBe(false);
+      });
+    });
+    describe('when the autocomplete menu is not visible', function() {
       beforeEach(function() {
         $.mockjax({
           url: '/foo',
@@ -118,6 +136,7 @@ describe('jquery.ui.autocomplete.localcache', function() {
       expect(autocomplete.abort.called).toBe(true);
     });
   });
+
   describe('autocompleteclose event', function() {
     beforeEach(function() {
       stub(autocomplete, 'abort');

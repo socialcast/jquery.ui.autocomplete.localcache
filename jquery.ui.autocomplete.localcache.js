@@ -94,8 +94,8 @@
         // no new results to add
         return;
       }
-
-      if (this.menu.element.is(':visible')) {
+      
+      if (this.menu.element.is(':visible') && this.menu.element.children('.ui-menu-item').length) {
         // amend new entries to existing menu
         this._renderMenu(this.menu.element, newEntries);
         this.menu.refresh();
