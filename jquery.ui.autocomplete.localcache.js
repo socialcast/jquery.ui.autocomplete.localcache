@@ -35,6 +35,10 @@
  *      });
  *    }
  *  });
+ *
+ *  dependencies:
+ *   underscore.js
+ *   jquery-ui autocomplete 1.8.x
  */
 (function($) {
   'use strict';
