@@ -97,6 +97,7 @@
       
       if (this.menu.element.is(':visible') && this.menu.element.children('.ui-menu-item').length) {
         // amend new entries to existing menu
+        this._trigger('response', null, {content: newEntries});
         this._renderMenu(this.menu.element, newEntries);
         this.menu.refresh();
         this._resizeMenu();

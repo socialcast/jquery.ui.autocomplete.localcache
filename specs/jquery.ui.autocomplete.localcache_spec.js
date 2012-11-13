@@ -21,10 +21,14 @@ describe('jquery.ui.autocomplete.localcache', function() {
 
   describe('#amendResponse', function() {
     describe('when the autocomplete menu is visible with items', function() {
+      var responseContent;
       beforeEach(function() {
         $.mockjax({
           url: '/foo',
           responseText: [newItem]
+        });
+        $input.on('autocompleteresponse', function(e, data) {
+          responseContent = data.content;
         });
         $input.val('java').autocomplete('search');
         tick(autocomplete.options.remoteDelay);
@@ -35,6 +39,9 @@ describe('jquery.ui.autocomplete.localcache', function() {
       });
       it('adds the new results to the local cache', function() {
         expect(newItem).toBeCachedIn(autocomplete);
+      });
+      it('fires the response event with the new content', function() {
+        expect(responseContent).toEqual([newItem]);
       });
     });
     describe('when the autocomplete menu is visible without any items', function() {
