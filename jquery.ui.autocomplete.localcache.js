@@ -84,10 +84,9 @@
      * @param results [Array] list of results for the requested term.  new entries will automatically be added to the cache
      */
     amendResponse: function(results) {
-      var self = this;
       var newEntries = _.reject(this._normalize(results), function(entry) {
-        return _.detect(self.cache, function(e) { return e.value === entry.value; });
-      });
+        return _.detect(this.cache, function(e) { return e.value === entry.value; });
+      }, this);
       this.cache = this.cache.concat(newEntries);
       if ((this.requestedTerm && this.requestedTerm !== this.element.val()) || !newEntries.length) {
         // input value has changed since the search was performed or there are
