@@ -89,8 +89,9 @@
         return _.detect(self.cache, function(e) { return e.value === entry.value; });
       });
       this.cache = this.cache.concat(newEntries);
-      if (this.requestedTerm && this.requestedTerm !== this.element.val()) {
-        // input value has changed since the search was performed
+      if ((this.requestedTerm && this.requestedTerm !== this.element.val()) || !newEntries.length) {
+        // input value has changed since the search was performed or there are
+        // no new results to add
         return;
       }
 
