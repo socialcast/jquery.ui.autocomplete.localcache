@@ -18,10 +18,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-//= require underscore
-//= require jquery-ui
-//= require array.remove
-
 /**
  * serve autocomplete results from local + remote cache.
  *
@@ -39,6 +35,10 @@
  *      });
  *    }
  *  });
+ *
+ *  dependencies:
+ *   underscore.js
+ *   jquery-ui autocomplete 1.8.x
  */
 (function($) {
   'use strict';
@@ -88,18 +88,19 @@
      * @param results [Array] list of results for the requested term.  new entries will automatically be added to the cache
      */
     amendResponse: function(results) {
-      var self = this;
       var newEntries = _.reject(this._normalize(results), function(entry) {
-        return _.detect(self.cache, function(e) { return e.value === entry.value; });
-      });
+        return _.detect(this.cache, function(e) { return e.value === entry.value; });
+      }, this);
       this.cache = this.cache.concat(newEntries);
-      if (this.requestedTerm && this.requestedTerm !== this.element.val()) {
-        // input value has changed since the search was performed
+      if ((this.requestedTerm && this.requestedTerm !== this.element.val()) || !newEntries.length) {
+        // input value has changed since the search was performed or there are
+        // no new results to add
         return;
       }
-
-      if (this.menu.element.is(':visible')) {
+      
+      if (this.menu.element.is(':visible') && this.menu.element.children('.ui-menu-item').length) {
         // amend new entries to existing menu
+        this._trigger('response', null, {content: newEntries});
         this._renderMenu(this.menu.element, newEntries);
         this.menu.refresh();
         this._resizeMenu();
@@ -112,7 +113,7 @@
      * remove an element from the cache
      */
     removeFromCache: function(element) {
-      this.cache.remove(element);
+      this.cache.splice(_.indexOf(this.cache, element), 1);
     },
     /**
      * show results from local cache immediately and prepare to fire off ajax request to load more results
